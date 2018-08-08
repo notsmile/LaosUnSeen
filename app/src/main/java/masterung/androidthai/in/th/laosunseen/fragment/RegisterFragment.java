@@ -108,6 +108,7 @@ public class RegisterFragment extends Fragment {
         StorageReference storageReference = firebaseStorage.getReference();
         StorageReference storageReference1 = storageReference.child("Avata/" + "avata");
 
+
         storageReference1.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
