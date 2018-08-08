@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -110,17 +111,20 @@ public class RegisterFragment extends Fragment {
 
     private void createAuthentication() {
 
+        Log.d("8AugV1", "CreateAuthen Work");
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            Log.d("8AugV1", "Successful");
                         } else {
                             MyAlert myAlert = new MyAlert(getActivity());
                             myAlert.normalDialog("Cannot Register",
                                     "Because ==> " + task.getException().getMessage());
+                            Log.d("8AugV1", "Error ==> " + task.getException().getMessage());
                         }
                     }
                 });
@@ -143,6 +147,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity(), "Cannot Upload Photo", Toast.LENGTH_SHORT).show();
+                Log.d("8AugV1", "e==> " + e.toString());
             }
         });
 
