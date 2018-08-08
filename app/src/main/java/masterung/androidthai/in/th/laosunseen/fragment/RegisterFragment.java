@@ -40,7 +40,8 @@ public class RegisterFragment extends Fragment {
     private Uri uri;
     private ImageView imageView;
     private boolean aBoolean = true;
-    private String nameString, emailString, passwordString;
+    private String nameString, emailString, passwordString,
+    uidString, pathURLString, myPostString;
 
 
     @Override
@@ -113,13 +114,16 @@ public class RegisterFragment extends Fragment {
 
         Log.d("8AugV1", "CreateAuthen Work");
 
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d("8AugV1", "Successful");
+
+                            uidString = firebaseAuth.getCurrentUser().getUid();
+                            Log.d("8AugV1", "uidString ==> " + uidString);
+
                         } else {
                             MyAlert myAlert = new MyAlert(getActivity());
                             myAlert.normalDialog("Cannot Register",
@@ -128,6 +132,8 @@ public class RegisterFragment extends Fragment {
                         }
                     }
                 });
+
+
 
     }
 
@@ -142,6 +148,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getActivity(), "Success Upload Photo", Toast.LENGTH_SHORT).show();
+                findPathUrlPhoto();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -154,6 +161,10 @@ public class RegisterFragment extends Fragment {
 
 
     }   // uploadPhoto
+
+    private void findPathUrlPhoto() {
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
