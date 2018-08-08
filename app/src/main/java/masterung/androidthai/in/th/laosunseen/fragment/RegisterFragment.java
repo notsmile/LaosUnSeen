@@ -15,13 +15,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import masterung.androidthai.in.th.laosunseen.MainActivity;
 import masterung.androidthai.in.th.laosunseen.R;
+import masterung.androidthai.in.th.laosunseen.utility.MyAlert;
 
-public class RegisterFragment extends Fragment{
+public class RegisterFragment extends Fragment {
 
     //    Explicit
     private Uri uri;
@@ -62,12 +64,33 @@ public class RegisterFragment extends Fragment{
 
     private void uploadProcess() {
 
+        EditText nameEditText = getView().findViewById(R.id.edtName);
+        EditText emailEditText = getView().findViewById(R.id.edtEmail);
+        EditText passwordEditText = getView().findViewById(R.id.edtPassword);
+
+//        Get Value From EditText
+        String nameString = nameEditText.getText().toString().trim();
+        String emailString = emailEditText.getText().toString().trim();
+        String passwordString = passwordEditText.getText().toString().trim();
+
 //        Check Choose Photo
         if (aBoolean) {
 //            Non Choose Photo
+            MyAlert myAlert = new MyAlert(getActivity());
+            myAlert.normalDialog("Non Choose Photo",
+                    "Please Choose Photo");
+        } else if (nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty()) {
+
+//            Have Space
+            MyAlert myAlert = new MyAlert(getActivity());
+            myAlert.normalDialog("Have Space",
+                    "Please Fill All Every Blank");
+
+        } else {
+
+//            No Space
 
         }
-
 
 
     }
@@ -114,7 +137,7 @@ public class RegisterFragment extends Fragment{
 
     private void createToolbar() {
         Toolbar toolbar = getView().findViewById(R.id.toolbarRegister);
-        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         ((MainActivity) getActivity()).getSupportActionBar().setTitle("Register");
         ((MainActivity) getActivity()).getSupportActionBar().setSubtitle("Please Choose Photo and Fill All Blank");
         ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
