@@ -71,6 +71,8 @@
 
             <!--Text-->
             <TextView
+                android:id="@+id/txtExit"
+                android:clickable="true"
                 android:layout_gravity="center_vertical"
                 android:textSize="@dimen/h2"
                 android:text="Exit"
