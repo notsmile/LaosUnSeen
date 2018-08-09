@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import masterung.androidthai.in.th.laosunseen.MainActivity;
 import masterung.androidthai.in.th.laosunseen.R;
 import masterung.androidthai.in.th.laosunseen.utility.MyAlert;
+import masterung.androidthai.in.th.laosunseen.utility.UserModel;
 
 public class RegisterFragment extends Fragment {
 
@@ -152,6 +155,7 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(getActivity(), "Success Upload Photo", Toast.LENGTH_SHORT).show();
                 findPathUrlPhoto();
                 createPost();
+                createDatabase();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -165,6 +169,31 @@ public class RegisterFragment extends Fragment {
 
 
     }   // uploadPhoto
+
+    private void createDatabase() {
+
+        UserModel userModel = new UserModel(uidString, nameString, emailString,
+                pathURLString, myPostString);
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference()
+                .child("User");
+
+        databaseReference.child(uidString).setValue(userModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getActivity(), "Register Success", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contentMainFragment, new ServiceFragment())
+                                .commit();
+                    }
+                });
+
+
+
+
+    }   // createDatabase
 
     private void createPost() {
 
