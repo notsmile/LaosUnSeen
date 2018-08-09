@@ -177,9 +177,15 @@ public class RegisterFragment extends Fragment {
                         public void onSuccess(Uri uri) {
                             urlStrings[0] = uri.toString();
                             pathURLString = urlStrings[0];
-
+                            Log.d("9AugV1", "urlStrings[0] ==> " + urlStrings[0]);
+                            Log.d("9AugV1", "pathURL ==> " + pathURLString);
                         }
-                    });
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("9AugV1", "e Error ==> " + e.toString());
+                }
+            });
 
 
         } catch (Exception e) {
