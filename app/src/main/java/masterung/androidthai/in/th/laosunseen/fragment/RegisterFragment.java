@@ -163,6 +163,7 @@ public class RegisterFragment extends Fragment {
 
 
 
+
     }   // uploadPhoto
 
     private void createPost() {
