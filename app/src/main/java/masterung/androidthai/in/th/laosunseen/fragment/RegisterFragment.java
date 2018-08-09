@@ -1,5 +1,6 @@
 package masterung.androidthai.in.th.laosunseen.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -47,6 +48,7 @@ public class RegisterFragment extends Fragment {
     private boolean aBoolean = true;
     private String nameString, emailString, passwordString,
     uidString, pathURLString, myPostString;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -81,6 +83,11 @@ public class RegisterFragment extends Fragment {
     }
 
     private void uploadProcess() {
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Upload Value Process");
+        progressDialog.setMessage("Please Wait few Minus...");
+        progressDialog.show();
 
         EditText nameEditText = getView().findViewById(R.id.edtName);
         EditText emailEditText = getView().findViewById(R.id.edtEmail);
@@ -134,6 +141,7 @@ public class RegisterFragment extends Fragment {
                             myAlert.normalDialog("Cannot Register",
                                     "Because ==> " + task.getException().getMessage());
                             Log.d("8AugV1", "Error ==> " + task.getException().getMessage());
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -156,12 +164,14 @@ public class RegisterFragment extends Fragment {
                 findPathUrlPhoto();
                 createPost();
                 createDatabase();
+                progressDialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getActivity(), "Cannot Upload Photo", Toast.LENGTH_SHORT).show();
                 Log.d("8AugV1", "e==> " + e.toString());
+                progressDialog.dismiss();
             }
         });
 
@@ -188,7 +198,12 @@ public class RegisterFragment extends Fragment {
                                 .replace(R.id.contentMainFragment, new ServiceFragment())
                                 .commit();
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("9AugV1", "e CreateDatabase ==> " + e.toString());
+            }
+        });
 
 
 
