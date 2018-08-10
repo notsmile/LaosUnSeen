@@ -90,6 +90,7 @@ public class ServiceFragment extends Fragment{
                             "Please Type on Post");
                 } else {
                     editCurrentPost(postString);
+                    editText.setText("");
                 }
             }
         });
@@ -116,7 +117,7 @@ public class ServiceFragment extends Fragment{
         String[] strings = resultString.split(",");
         ArrayList<String> stringArrayList = new ArrayList<>();
         for (int i=0; i<strings.length; i+=1) {
-            stringArrayList.add(strings[i]);
+            stringArrayList.add(strings[i].trim());
         }
         stringArrayList.add(postString);
         return stringArrayList.toString();
